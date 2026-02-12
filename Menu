@@ -1,0 +1,118 @@
+#include <iostream>
+#include <cmath>
+#include <stdlib.h>
+using namespace std;
+
+int mayor(int a, int b, int c);
+int ciclo(int x);
+double pesototal(int cantidadProductos);
+double promedio(int n);
+
+int main() {
+    int opcion;
+
+    do {
+        cout << "Elige una opción:\n";
+        cout << "1. Determinar el mayor de tres números\n";
+        cout << "2. Calcular la serie con ciclo For\n";
+        cout << "3. Calcular el peso total de productos\n";
+        cout << "4. Calcular el promedio de los N numeros pares\n";
+        cout << "0. Salir\n";
+        cout << "Opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            int a = 0, b = 0, c = 0, m;
+            cout << "Introduce el primer número: ";
+            cin >> a;
+            cout << "Introduce el segundo número: ";
+            cin >> b;
+            cout << "Introduce el tercer número: ";
+            cin >> c;
+            cout << "El mayor es: " << mayor(a, b, c);
+            break;
+        }
+        case 2: {
+            int x;
+            cout << "Introduce el valor de x: ";
+            cin >> x;
+            cout << "La suma total de la serie es: " << ciclo(x) << endl;
+
+            break;
+        }
+        case 3: {
+            int cantidad;
+            cout << "¿Cuántos productos deseas ingresar? ";
+            cin >> cantidad;
+            cout << "El peso total de los productos es: " << pesototal(cantidad) << " gramos.\n";
+
+            break;
+        }
+        case 0: {
+            cout << "¡Hasta luego!\n";
+            return 0;
+            break;
+        }
+
+        case 4: {
+            int n = 0;
+            cout << "Indique la cantidad de n numeros pares: "; cin >> n;
+
+            cout << "El promedio de " << n << " pares es: " << promedio(n) << endl;
+        }
+        default: {
+            cout << "Opción no válida. Intenta de nuevo.\n";
+            break;
+        }
+        }
+        system("pause");
+        system("cls");
+    } while (opcion != 0);
+
+    return 0;
+}
+
+int mayor(int a, int b, int c) {
+    
+    if (a == b && b == c) {
+        return a;
+    }
+    else if (a > b && a > c) {
+        return a;
+    }
+    else if (b > a && b > c) {
+        return b;
+    }
+    else {
+        return c;
+    }
+}
+
+int ciclo(int x) {
+    double suma = 0;
+    for (int b = 1; b <= 10; ++b) {
+        suma += pow(x, b);
+    }
+    return suma;
+}
+
+double pesototal(int cantidadProductos) {
+    double pesoTotal = 0.0;
+    for (int i = 1; i <= cantidadProductos; i++) {
+        double peso;
+        cout << "Ingresa el peso del producto " << i << " (en gramos): ";
+        cin >> peso;
+        pesoTotal += peso;
+    }
+    return pesoTotal;
+}
+double promedio(int n) {
+    double promedio = 0.0;
+
+    for (int i = 0; i <= n; i++) {
+        promedio += 2 * i;
+    }
+    promedio = promedio / n;
+    return promedio;
+}
