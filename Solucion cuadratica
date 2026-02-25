@@ -1,0 +1,50 @@
+// ConsoleApplication2.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Autor: Ricardo Mendoza
+// Fecha: 2026-02-19
+
+#include <iostream> 
+#include <cmath>
+using namespace std;
+
+int discriminante(double a, double b, double c);
+void solucion(double a, double b, double d, double &x1, double &x2, double &i1, double &i2);
+int main()
+{
+    cout << "Programa para resolver ecuaciones cuadraticas: ax^2+bx+c" << endl;
+    double a = 0, b = 0, c = 0, d = 0;
+    double x1 = 0, x2 = 0, i1 = 0, i2 = 0;
+    cout << "Ingrese el valor de a: ";
+    cin >> a;
+    cout << "Ingrese el valor de b: ";
+    cin >> b;
+    cout << "Ingrese el valor de c: ";
+    cin >> c;
+    d = discriminante(a, b, c);
+    solucion(a, b, d, x1, x2, i1, i2);
+    if (d == 0)
+        cout << "La solucion es unica: X=" << x1 << endl;
+    else if (d < 0)
+        cout << "La solucion es imaginaria: X1=" << x1 << " + (" << i1 << ")i, X2=" << x2 << " + (" << i2 << ")i" << endl;
+    else 
+        cout << "La solucion es real: X1=" << x1 << " X2=" << x2 << endl;
+    return 0;
+}
+
+int discriminante(double a, double b, double c) {
+    return pow(b, 2) - 4 * a * c;
+}
+void solucion(double a, double b, double d, double &x1, double &x2, double &i1, double &i2) {
+    if (d == 0) {
+        x1 = (-1)*b / (2 * a);
+    } 
+    else if (d > 0) {
+        x1 = ((-1)*b + sqrt(d)) / (2 * a);
+        x2 = ((-1)*b - sqrt(d)) / (2 * a);
+    }
+    else {
+        x1 = (-1) * b / (2 * a);
+        i1 = sqrt((-1) * d) / (2 * a);
+        x2 = x1;
+        i2 = (-1) * i1;
+    }
+}
