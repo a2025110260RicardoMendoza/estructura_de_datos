@@ -1,0 +1,61 @@
+# Creador: Ricardo Mendoza 
+# Fecha: 03/02/2026
+def factorial(num):
+    if num == 0 or num == 1:
+        return 1
+    return num * factorial(num - 1)
+
+
+def suma_impares(n):
+    if n <= 0:
+        return 0
+    if n % 2 != 0:
+        return n + suma_impares(n - 1)
+    else:
+        return suma_impares(n - 1)
+
+
+def fibonacci(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+def mostrar_fibonacci(n, i=0):
+    if i >= n:
+        return
+    print(fibonacci(i), end=" ")
+    mostrar_fibonacci(n, i + 1)
+
+
+while True:  # Simulación de do-while
+    print("\n--- MENÚ ---")
+    print("1. Calcular factorial")
+    print("2. Sumar números impares")
+    print("3. Mostrar serie Fibonacci")
+    print("4. Salir")
+
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == "1":
+        numero = int(input("Ingrese un número: "))
+        print(f"El factorial de {numero} es: {factorial(numero)}")
+
+    elif opcion == "2":
+        numero = int(input("Ingrese un número límite: "))
+        print(f"La suma de impares hasta {numero} es: {suma_impares(numero)}")
+
+    elif opcion == "3":
+        numero = int(input("Ingrese la cantidad de términos: "))
+        print("Serie Fibonacci:")
+        mostrar_fibonacci(numero)
+        print()
+
+    elif opcion == "4":
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opción no válida.")
