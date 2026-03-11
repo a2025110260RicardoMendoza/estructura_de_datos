@@ -1,0 +1,13 @@
+//Ricardo Mendoza
+//Fecha: 11/03/2026
+
+class Triangulo {
+private:
+  float base, altura;
+public:
+  Triangulo(); //Constructor
+  ~Triangulo(); //Destructor
+  //Polimorfismo
+  float area(float b, float h); //Metodos
+  float area();
+}
