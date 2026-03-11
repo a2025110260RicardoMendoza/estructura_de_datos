@@ -1,0 +1,24 @@
+//Ricardo Mendoza 
+//11/03/2026
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Saludo {
+private: 
+    string mensaje = "Hola mundo"; //atributo
+public: 
+    void mostrar(); //metodo
+};
+
+void Saludo::mostrar() {
+    cout << mensaje;
+}
+
+int main()
+{
+    Saludo s1; //constructor
+    s1.mostrar();
+}
+
