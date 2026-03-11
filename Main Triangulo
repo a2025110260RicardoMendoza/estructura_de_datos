@@ -1,0 +1,17 @@
+//Ricardo Mendoza  
+//Fecha: 11/03/2026
+#include <iostream>
+#include "Triangulo.h"
+
+using namespace std;
+
+int main()
+{
+  float b, h;
+  Triangulo triangulito; // Crea el objeto de la clase
+  cout << "Ingrese la base: "; cin >> b;
+  cout << "Ingrese la altura: "; cin >> h;
+  cout << "El area es: " << triangulito.area(b, h) << endl;
+  cout << "El area es: " << triangulito.area() << endl;
+  return 0;
+}
