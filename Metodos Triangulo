@@ -1,0 +1,15 @@
+//Ricardo Mendoza
+//Fecha: 11/03/2026
+
+Triangulo::Triangulo(){
+  base = 4;
+  altura = 5;
+}
+~Triangulo(){
+}
+float Triangulo::area(float b, float h){
+  return (b * h) / 2;
+}
+float Triangulo::area(){
+  return (base * altura) / 2;
+}
