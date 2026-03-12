@@ -1,0 +1,111 @@
+// Ricardo Mendoza  
+// Fecha: 12/03/2026
+
+
+#include <iostream>
+#define MAX 10
+
+using namespace std;
+
+class Vector
+{
+private:
+	int vec[10], n;
+public:
+	Vector(void); // constructor
+	~Vector(void); //destructor
+
+	void cargarVector(int vec[], int n); //metodos
+	void mostrarVector(int vec[], int n);
+	void ordenarVector(int vec[], int n);
+	void prom_tres(int vec[], int n); 
+};
+
+Vector::Vector(void)
+{
+	for (int i = 0; i < 10; i++) {
+		vec[i] = 0;
+	}
+	n = 0;
+}
+
+
+Vector::~Vector(void)
+{
+}
+
+void Vector::cargarVector(int vec[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << "vec[" << i << "] =";
+		cin >> vec[i];
+	}
+}
+
+void Vector::mostrarVector(int vec[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << vec[i] << ", ";
+	}
+	cout << endl;
+}
+
+void Vector::ordenarVector(int vec[], int n) {
+	int aux;
+	for (int i = 0; i < (n - 1); i++) {
+		for (int j = i; j < n; j++) {
+			if (vec[i] > vec[j]) {
+				aux = vec[i];
+				vec[i] = vec[j];
+				vec[j] = aux;
+			}
+		}
+	}
+}
+
+void Vector::prom_tres(int vec[], int n) {
+	for (int i = 0; i < n - 2; i++) {
+		cout << "P" << i + 1 << "=" << (vec[i] + vec[i + 1] + vec[i + 2]) / 3 << endl;
+	}
+}
+
+
+
+int main() {
+	int vec[MAX], n, op;
+	Vector vector1;  // Declarando el objeto vector1 de la clase vector
+	do {
+		cout << "Ingrese el tamanio del vector : ";
+		cin >> n;
+	} while ((n > MAX) || (n <= 0));
+	do {
+		cout << "-----       M E N U        -----" << endl;
+		cout << "|1.- Cargar Vector.            |" << endl;
+		cout << "|2.- Mostrar Vector.           |" << endl;
+		cout << "|3.- Ordenar Vector.           |" << endl;
+		cout << "|4. - Promedio de 3.           | "<< endl;
+		cout << "|0.- Salir                     |" << endl;
+		cout << "--------------------------------" << endl;
+		cout << " Elija una opcion" << endl;
+		cin >> op;
+		switch (op) {
+		case 1:
+			vector1.cargarVector(vec, n);  //Llamar al metodo
+			break;
+		case 2:
+			vector1.mostrarVector(vec, n);
+			break;
+		case 3:
+			vector1.ordenarVector(vec, n);
+			break;
+		case 4:
+			vector1.prom_tres(vec, n);
+		case 0:
+			cout << "Salir" << endl;
+			break;
+		default:
+			cout << "Error: Opcion no valida..." << endl;
+			break;
+		}
+	} while (op != 0);
+	return 0;
+}
+
