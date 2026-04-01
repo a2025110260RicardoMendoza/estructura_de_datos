@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include "Empleado.h"
+using namespace std;
+
+
+
+    int main() {
+        Empleado e1("Juan", "Perez", "Analista");
+        
+        e1.mostrarInformacion();
+
+        e1.cambiarCargo("Jefe de Proyecto");
+
+        e1.corregirApellido("Peréz-Ramirez");
+
+        e1.mostrarInformacion();
+
+        e1.depurarNombre();
+
+        return 0;
+    }
