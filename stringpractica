@@ -15,11 +15,11 @@ int main() {
     string cadena;
     int opcion;
 
-    cout << "Ingrese la cadena inicial: ";
+    cout << "Ingrese la frase: ";
     getline(cin, cadena);
 
     do {
-        cout << "\n--- MENU (Frase: [" << cadena << "]) ---" << endl;
+        cout << "\n--- MENU (Actual: [" << cadena << "]) ---" << endl;
         cout << "1. Invertir frase" << endl;
         cout << "2. Quitar vocales" << endl;
         cout << "3. Intercambiar palabras" << endl;
@@ -30,17 +30,13 @@ int main() {
         cout << "8. Longitud" << endl;
         cout << "9. Comparar" << endl;
         cout << "0. Salir" << endl;
-        cout << "Seleccione: ";
+        cout << "Opcion: ";
         cin >> opcion;
         cin.ignore();
 
         switch (opcion) {
-            case 1: 
-                cout << "Resultado: " << invertir(cadena) << endl; 
-                break;
-            case 2: 
-                cout << "Resultado: " << quitarVocales(cadena) << endl; 
-                break;
+            case 1: cout << "Resultado: " << invertir(cadena) << endl; break;
+            case 2: cout << "Resultado: " << quitarVocales(cadena) << endl; break;
             case 3: {
                 string b, r;
                 cout << "Buscar: "; cin >> b;
@@ -50,32 +46,26 @@ int main() {
             }
             case 4: {
                 int p, c;
-                cout << "Posicion y cantidad: "; cin >> p >> c;
+                cout << "Inicio y cantidad: "; cin >> p >> c;
                 cout << "Resultado: " << sacarSubstring(cadena, p, c) << endl;
                 break;
             }
-            case 5: 
-                cout << "Total vocales: " << contarVocales(cadena) << endl; 
-                break;
-            case 6: 
-                cout << "Resultado: " << quitarEspacios(cadena) << endl; 
-                break;
+            case 5: cout << "Total vocales: " << contarVocales(cadena) << endl; break;
+            case 6: cout << "Resultado: " << quitarEspacios(cadena) << endl; break;
             case 7: {
                 char car;
                 cout << "Caracter: "; cin >> car;
                 int pos = encontrar(cadena, car);
                 if (pos != -1) cout << "Posicion: " << pos << endl;
-                else cout << "No encontrado" << endl;
+                else cout << "No existe" << endl;
                 break;
             }
-            case 8: 
-                cout << "Longitud: " << cadena.length() << endl; 
-                break;
+            case 8: cout << "Longitud: " << cadena.length() << endl; break;
             case 9: {
                 string otra;
-                cout << "Comparar con: "; getline(cin, otra);
-                if (cadena == otra) cout << "Iguales" << endl;
-                else cout << "Diferentes" << endl;
+                cout << "Frase a comparar: "; getline(cin, otra);
+                if (cadena == otra) cout << "Son iguales" << endl;
+                else cout << "Son diferentes" << endl;
                 break;
             }
         }
@@ -97,8 +87,8 @@ string quitarVocales(string &frase) {
     string aux = "";
     for (int i = 0; i < frase.length(); i++) {
         char c = frase[i];
-        if (c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u' &&
-            c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U') {
+        if (c!='a' && c!='e' && c!='i' && c!='o' && c!='u' &&
+            c!='A' && c!='E' && c!='I' && c!='O' && c!='U') {
             aux += c;
         }
     }
@@ -107,30 +97,32 @@ string quitarVocales(string &frase) {
 }
 
 string intercambiar(string &frase, string buscar, string reemplazo) {
-    size_t pos = frase.find(buscar);
-    if (pos != string::npos) {
-        frase.replace(pos, buscar.length(), reemplazo);
+    for (int i = 0; i <= (int)frase.length() - (int)buscar.length(); i++) {
+        if (frase.substr(i, buscar.length()) == buscar) {
+            frase.replace(i, buscar.length(), reemplazo);
+            break; 
+        }
     }
     return frase;
 }
 
 string sacarSubstring(string frase, int ini, int cant) {
-    if (ini < frase.length()) {
+    if (ini >= 0 && ini < frase.length()) {
         return frase.substr(ini, cant);
     }
     return "Error";
 }
 
 int contarVocales(string frase) {
-    int contador = 0;
+    int c = 0;
     for (int i = 0; i < frase.length(); i++) {
-        char c = frase[i];
-        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
-            c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
-            contador++;
+        char letra = frase[i];
+        if (letra=='a'||letra=='e'||letra=='i'||letra=='o'||letra=='u'||
+            letra=='A'||letra=='E'||letra=='I'||letra=='O'||letra=='U') {
+            c++;
         }
     }
-    return contador;
+    return c;
 }
 
 string quitarEspacios(string &frase) {
@@ -143,7 +135,8 @@ string quitarEspacios(string &frase) {
 }
 
 int encontrar(string frase, char c) {
-    size_t pos = frase.find(c);
-    if (pos != string::npos) return (int)pos;
+    for (int i = 0; i < frase.length(); i++) {
+        if (frase[i] == c) return i;
+    }
     return -1;
 }
