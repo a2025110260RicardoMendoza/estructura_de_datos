@@ -1,0 +1,96 @@
+#include <iostream>
+#include "pila.h"
+#define MAX 100
+using namespace std;
+
+Pila::Pila()
+{
+    cima = -1;
+}
+
+bool Pila::Apilar(int& elemento)
+{
+    bool res;
+    if (cima == MAX - 1)
+    {
+        cout << "Desbordamiento de Pila (Overflow)" << endl;
+        res = false;
+    }
+    else
+
+    {
+        cima++;
+        pila[cima] = elemento;
+        res = true;
+    }
+    return res;
+
+
+}
+
+bool Pila::Desapilar()
+{
+    bool res;
+    if (cima == -1)
+    {
+        cerr << "Se esta intentando quitar un elemento de una pila vacia (underflow)" << endl;
+        res = false;
+    }
+    else
+
+    {
+        cima--;
+        res = true;
+    }
+    return res;
+
+
+}
+
+void Pila::VerPila()
+{
+    for (int i = 0; i <= cima; i++)
+        cout << pila[i] << endl;
+
+}
+
+
+bool Pila::CimaPila(int& elemento)
+{
+    if (PilaVacia())
+    {
+        cerr << "Pila vacia (underflow)" << endl;
+        return false;
+    }
+    else
+    {
+        elemento = pila[cima]; 
+        return true;
+    }
+
+}
+
+bool Pila::PilaVacia()
+{
+    return cima == -1;
+}
+
+void Pila::LimpiarPila()
+{
+    cima = -1;
+}
+
+
+bool Pila::Iguales(Pila p)
+{
+    if (cima != p.cima)
+        return false;
+
+    for (int i = 0; i <= cima; i++)
+    {
+        if (pila[i] != p.pila[i])
+            return false;
+    }
+
+    return true;
+}
