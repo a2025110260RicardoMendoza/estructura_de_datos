@@ -1,3 +1,7 @@
+// Ricardo Axel Mendoza Sosa
+// Fecha: 04/08/2026
+// 2025110260
+
 #pragma once
 #define MAX 100
 class Pila
