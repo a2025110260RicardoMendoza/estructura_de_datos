@@ -1,0 +1,100 @@
+#include <iostream>
+#include "Pila.h"
+#define MAX 100 
+
+// typedef int TipoDato... "using TipoDato = int;"
+
+using namespace std;
+
+int op;
+
+int main()
+{
+	Pila p1; 
+    Pila p2;
+    do {
+		cout << "MENU PILAS ESTATICAS" << endl;
+		cout << "1. Apilar" << endl;
+		cout << "2. Desapilar" << endl;
+		cout << "3. Mostrar Cima de la Pila" << endl;
+		cout << "4. Ver Pila" << endl;
+		cout << "5. Limpiar Pila" << endl;
+		cout << "6. Verificar si la pila esta vacia" << endl;
+		cout << "7. Verificar si las pilas son iguales" << endl;
+		cout << "8. Salir" << endl;
+		cout << "Ingrese una opcion: "; cin >> op;
+		switch (op) {
+		case 1: {
+			int elemento1, elemento2;
+			cout << "Ingrese el elemento a apilar para la pila 1: "; cin >> elemento1;
+			cout << "Ingrese el elemento a apilar para la pila 2: "; cin >> elemento2;
+			p1.Apilar(elemento1); p2.Apilar(elemento2);
+			break;
+		}
+		case 2: {
+			if (p1.Desapilar()) 
+				cout << "Elemento desapilado de la pila 1" << endl;
+			else
+				cout << "No se pudo desapilar de la pila 1" << endl;
+			if (p2.Desapilar()) 
+				cout << "Elemento desapilado de la pila 2" << endl;
+			else
+				cout << "No se pudo desapilar de la pila 2" << endl;
+			
+			break;
+		}
+		case 3: {
+			int cima1, cima2;
+			if (p1.CimaPila(cima1))
+				cout << "La cima de la pila 1 es: " << cima1 << endl;
+			else
+				cout << "La pila 1 esta vacia" << endl;
+			
+			if (p2.CimaPila(cima2))
+				cout << "La cima de la pila 2 es: " << cima2 << endl;
+			else
+				cout << "La pila 2 esta vacia" << endl;
+			break;
+		}
+		case 4: {
+			p1.VerPila();
+			p2.VerPila();
+			break;
+		}
+		case 5: {
+			p1.LimpiarPila(); cout << "Pila 1 limpiada" << endl;
+			p2.LimpiarPila(); cout << "Pila 2 limpiada" << endl;
+			break;
+		}
+		case 6: {
+			if (p1.PilaVacia())
+				cout << "La pila esta vacia" << endl;
+			else
+				cout << "La pila no esta vacia" << endl;
+			
+			if (p2.PilaVacia())
+				cout << "La pila esta vacia" << endl;
+			else
+				cout << "La pila no esta vacia" << endl;
+			break;
+		}
+		case 7: {
+			if (p1.Iguales(p2))
+				cout << "Las pilas son iguales" << endl;
+			else
+				cout << "Las pilas no son iguales" << endl;
+			break;
+		}
+		case 8: {
+			cout << "Saliendo del programa..." << endl;
+			break;
+		}
+		default: {
+			cout << "Opcion no valida, intente de nuevo." << endl;
+			break;
+		}
+        }
+    } while (op != 8);
+	return 0;
+}
+
