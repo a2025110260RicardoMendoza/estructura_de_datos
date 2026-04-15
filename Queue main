@@ -1,0 +1,54 @@
+// Ricardo Mendoza 
+// Fecha: 15/04/2026
+
+#include <iostream>
+#include "Queue.h"
+
+using namespace std;
+
+
+#define MAX_SIZE 256 /* capacidad máxima */
+typedef char almacen[MAX_SIZE];
+
+int op;
+
+// probando la cola
+int main()
+{
+    int d;
+    Queue q;
+    do {
+        cout << "1. Insertar elemento a la cola" << endl;
+        cout << "2. Retirar elemento de la cola" << endl;
+        cout << "3. Mostrar número de elementos en la cola" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Opción: ";
+        cin >> op;
+        switch (op) {
+        case 1:
+            cout << "Elemento a insertar: ";
+            cin >> d;
+            q.put(d);
+            break;
+        case 2:
+            d = q.get();
+            if (d == -1) {
+                cout << "La cola está vacía" << endl;
+            }
+            else {
+                cout << "Elemento retirado: " << (char)d << endl;
+            }
+            break;
+        case 3:
+            cout << "Número de elementos en la cola: " << q.size() << endl;
+            break;
+        case 4:
+            cout << "Saliendo..." << endl;
+            break;
+        default:
+            cout << "Opción no válida" << endl;
+			break;
+		}
+    } while (op != 4);
+    return 0;
+}
