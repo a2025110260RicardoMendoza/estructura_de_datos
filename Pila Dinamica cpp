@@ -1,0 +1,85 @@
+#include "Pila.h"
+#include "Nodo.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+Pila::Pila()
+{
+	cima = nullptr;
+}
+
+Pila::~Pila()
+{
+	while (cima != nullptr)
+	{
+		pop();
+	}
+}
+
+void Pila::push(string titulo, string autor, int anio)
+{
+	Nodo* nuevoNodo = new Nodo();
+	nuevoNodo->titulo = titulo;
+	nuevoNodo->autor = autor;
+	nuevoNodo->anio = anio;
+	nuevoNodo->siguiente = cima;
+	cima = nuevoNodo;
+}
+
+void Pila::pop()
+{
+	if (cima != nullptr)
+	{
+		Nodo* nodoEliminar = cima;
+		cima = cima->siguiente;
+		delete nodoEliminar;
+	}
+	else
+	{
+		cout << "La pila está vacía. No se puede eliminar ningún libro." << endl;
+	}
+}
+
+void Pila::mostrarPila()
+{
+	if (cima != nullptr)
+	{
+		Nodo* nodoActual = cima;
+		while (nodoActual != nullptr)
+		{
+			cout << "Título: " << nodoActual->titulo << ", Autor: " << nodoActual->autor << ", Año: " << nodoActual->anio << endl;
+			nodoActual = nodoActual->siguiente;
+		}
+	}
+	else
+	{
+		cout << "La pila está vacía. No hay libros para mostrar." << endl;
+	}
+}
+
+void Pila::mostrarTope()
+{
+	if (cima != nullptr)
+	{
+		cout << "Libro en la cima de la pila:" << endl;
+		cout << "Título: " << cima->titulo << ", Autor: " << cima->autor << ", Año: " << cima->anio << endl;
+	}
+	else
+	{
+		cout << "La pila está vacía. No hay libro en la cima." << endl;
+	}
+}
+
+void Pila::sizePila()
+{
+	int contador = 0;
+	Nodo* nodoActual = cima;
+	while (nodoActual != nullptr)
+	{
+		contador++;
+		nodoActual = nodoActual->siguiente;
+	}
+	cout << "Número de libros en la pila: " << contador << endl;
+}
