@@ -1,0 +1,66 @@
+//Nombre Ricardo Axel Mendoza Sosa
+//Dato: 22/04/2026
+//Pila dinamica de libros
+#include <iostream>
+#include <string>
+#include "Pila.h"
+#include "Nodo.h"
+using namespace std;
+
+int op;
+
+
+int main()
+{
+	do {
+		cout << "Menu Libreria" << endl;
+		cout << "1. Agregar libro" << endl;
+		cout << "2. Eliminar libro" << endl;
+		cout << "3. Mostrar libros" << endl;
+		cout << "4. Mostrar libro en la cima" << endl;
+		cout << "5. Salir" << endl;
+		cout << "Ingrese una opcion: ";
+		cin >> op;
+	
+	switch (op) {
+	case 1: {
+		string titulo, autor;
+		int anio;
+		cout << "Ingrese el titulo del libro: ";
+		cin >> titulo;
+		cout << "Ingrese el autor del libro: ";
+		cin >> autor;
+		cout << "Ingrese el año del libro: ";
+		cin >> anio;
+		Pila pilaLibros;
+		pilaLibros.push(titulo, autor, anio);
+		break;
+	}
+	case 2: {
+		Pila pilaLibros;
+		pilaLibros.pop();
+		break;
+	}
+	case 3: {
+		Pila pilaLibros;
+		pilaLibros.mostrarPila();
+		break;
+	}
+	case 4: {
+		Pila pilaLibros;
+		pilaLibros.mostrarTope();
+		break;
+	}
+	case 5: {
+		cout << "Saliendo del programa..." << endl;
+		break;
+	}
+	default: {
+			  cout << "Opcion no valida. Por favor, ingrese una opcion del 1 al 5." << endl;
+			  break;
+	}
+	}
+	} while (op < 1 || op > 5);
+}
+
+
