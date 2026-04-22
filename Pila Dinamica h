@@ -1,0 +1,21 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include "Nodo.h"
+
+using namespace std;
+
+class Pila
+{
+private:
+	Nodo* cima;
+public:
+	Pila();
+	~Pila();
+	void push(string titulo, string autor, int anio);
+	void pop();
+	void mostrarPila();
+	void mostrarTope();
+	void sizePila();	
+};
+
