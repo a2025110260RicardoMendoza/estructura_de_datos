@@ -1,0 +1,31 @@
+// ColaCircularDinamica.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+// Ricardo Axel Mendoza Sosa
+// 29/04/2026
+
+#include <iostream>
+#include <string>
+#include "Nodo.h"
+#include "Cola.h"
+using namespace std;
+
+int main() {
+    Cola cola;
+
+    cola.encolar("Juan");
+    cola.encolar("Maria");
+    cola.encolar("Pedro");
+
+    cola.mostrar();
+
+    cout << "Atendiendo: " << cola.desencolar() << endl;
+    cola.mostrar();
+
+    cola.encolar("Luis");
+    cola.mostrar();
+
+    cout << "Atendiendo: " << cola.desencolar() << endl;
+    cout << "Atendiendo: " << cola.desencolar() << endl;
+    cola.mostrar();
+
+    return 0;
+}
