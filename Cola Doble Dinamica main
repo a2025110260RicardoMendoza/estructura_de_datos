@@ -1,0 +1,38 @@
+//Ricardo Axel Mendoza Sosa
+//29/04/2026
+// ColaDoble.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include "Nodo.h"
+#include "Doqueue.h"
+
+using namespace std;
+
+typedef char DATA_TYPE;
+
+int main()
+{
+    Doqueue cola;
+
+    // Insertar letras A-Z al final
+    for (char c = 'A'; c <= 'Z'; c++) {
+        cola.put_back(c);
+    }
+
+    // Insertar dígitos 9-0 al inicio
+    for (int i = 9; i >= 0; i--) {
+        cola.put_front(i + '0');
+    }
+
+    // Mostrar y vaciar la cola
+    cout << "Contenido de la cola (de frente a fondo):" << endl;
+    while (!cola.empty()) {
+        cout << cola.get_front() << " ";
+    }
+
+    cout << "\nFin del programa.\n";
+    return 0;
+}
