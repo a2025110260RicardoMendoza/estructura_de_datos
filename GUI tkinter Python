@@ -1,0 +1,140 @@
+#Ricardo Mendoza 
+#2025110260  
+#06/05/2026
+import tkinter as tk
+from tkinter import messagebox
+
+COMISION = 0.10
+
+BG = "#1e272e"
+CARD = "#2f3640"
+PRIMARY = "#00a8ff"
+TEXT = "#f5f6fa"
+
+def bolivianos_a_soles():
+    try:
+        bolivianos = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get())
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
+
+        usdt = bolivianos / compra_usdt_bs
+        soles_bruto = usdt * venta_usdt_soles
+
+        comision = soles_bruto * COMISION
+        soles_neto = soles_bruto - comision
+
+        resultado.set(
+            f"💰 Recibes:\n{usdt:.4f} USDT\nS/ {soles_neto:.2f}\n"
+            f"(Comisión: S/ {comision:.2f})"
+        )
+
+    except ValueError:
+        messagebox.showerror("Error", "Ingrese solo números válidos.")
+
+
+def soles_a_bolivianos():
+    try:
+        soles = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get())
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
+
+        usdt = soles / venta_usdt_soles
+        bolivianos_bruto = usdt * compra_usdt_bs
+
+        comision = bolivianos_bruto * COMISION
+        bolivianos_total = bolivianos_bruto + comision
+
+        resultado.set(
+            f"💸 Necesitas:\n{usdt:.4f} USDT\nBs {bolivianos_total:.2f}\n"
+            f"(Incluye comisión Bs {comision:.2f})"
+        )
+
+    except ValueError:
+        messagebox.showerror("Error", "Ingrese solo números válidos.")
+
+
+ventana = tk.Tk()
+ventana.title("Calculadora Cripto")
+ventana.geometry("1024x720")
+ventana.configure(bg=BG)
+ventana.resizable(False, False)
+
+# CARD sin altura fija ❗
+frame = tk.Frame(ventana, bg=CARD, padx=20, pady=20)
+frame.pack(pady=20, padx=20, fill="both", expand=True)
+
+tk.Label(
+    frame,
+    text="💱 Conversor Bs / USDT / Soles",
+    font=("Segoe UI", 14, "bold"),
+    bg=CARD,
+    fg=TEXT
+).pack(pady=10)
+
+def crear_input(texto):
+    tk.Label(frame, text=texto, bg=CARD, fg=TEXT, font=("Segoe UI", 10)).pack()
+    entry = tk.Entry(
+        frame,
+        font=("Segoe UI", 11),
+        justify="center",
+        relief="flat",
+        bg="#dcdde1"
+    )
+    entry.pack(pady=6, ipadx=5, ipady=5, fill="x")
+    return entry
+
+entry_monto = crear_input("Monto")
+entry_compra_usdt_bs = crear_input("Compra USDT (Bs)")
+entry_venta_usdt_soles = crear_input("Venta USDT (S/)")
+
+btn_frame = tk.Frame(frame, bg=CARD)
+btn_frame.pack(pady=10)
+
+tk.Button(
+    btn_frame,
+    text="Bs → Soles",
+    command=bolivianos_a_soles,
+    bg=PRIMARY,
+    fg="white",
+    font=("Segoe UI", 10, "bold"),
+    relief="flat",
+    width=18
+).pack(pady=5)
+
+tk.Button(
+    btn_frame,
+    text="Soles → Bs",
+    command=soles_a_bolivianos,
+    bg=PRIMARY,
+    fg="white",
+    font=("Segoe UI", 10, "bold"),
+    relief="flat",
+    width=18
+).pack(pady=5)
+
+# 🔥 Caja de resultado (esto arregla el problema visual)
+resultado = tk.StringVar()
+resultado.set("Aquí verás el resultado")
+
+resultado_box = tk.Label(
+    frame,
+    textvariable=resultado,
+    bg="#353b48",
+    fg=TEXT,
+    font=("Segoe UI", 11),
+    justify="center",
+    wraplength=300,  # evita que el texto se salga
+    padx=10,
+    pady=10
+)
+resultado_box.pack(pady=15, fill="x")
+
+tk.Label(
+    frame,
+    text="Comisión incluida: 10%",
+    bg=CARD,
+    fg="#7f8fa6",
+    font=("Segoe UI", 9)
+).pack()
+
+ventana.mainloop()
