@@ -1,0 +1,493 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <queue>
+#include <stack>
+#include <thread>
+#include <chrono>
+#include <cstdlib>
+
+using namespace std;
+
+/*==================================================
+    CLASE PERSONA
+==================================================*/
+class Persona {
+protected:
+    string nombre;
+    string cedula;
+
+public:
+    Persona() {}
+
+    Persona(string nombre, string cedula) {
+        this->nombre = nombre;
+        this->cedula = cedula;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    string getCedula() {
+        return cedula;
+    }
+};
+
+/*==================================================
+    CLASE USUARIO (HERENCIA)
+==================================================*/
+class Usuario : public Persona {
+private:
+    string username;
+    string password;
+    string rol;
+    string cargoIngeniero;
+
+public:
+    Usuario() {}
+
+    Usuario(
+        string nombre,
+        string cedula,
+        string username,
+        string password,
+        string rol,
+        string cargoIngeniero
+    ) : Persona(nombre, cedula) {
+
+        this->username = username;
+        this->password = password;
+        this->rol = rol;
+        this->cargoIngeniero = cargoIngeniero;
+    }
+
+    string getUsername() {
+        return username;
+    }
+
+    string getPassword() {
+        return password;
+    }
+
+    string getRol() {
+        return rol;
+    }
+
+    string getCargoIngeniero() {
+        return cargoIngeniero;
+    }
+
+    bool login(string user, string pass) {
+        return username == user && password == pass;
+    }
+};
+
+/*==================================================
+    CLASE MAQUINA
+==================================================*/
+class Maquina {
+private:
+    int id;
+    string nombre;
+
+    float temperatura;
+    float voltaje;
+    float presion;
+    float velocidad;
+
+    stack<float> historialTemperatura;
+
+public:
+    Maquina* siguiente;
+
+    Maquina(int id, string nombre) {
+        this->id = id;
+        this->nombre = nombre;
+
+        temperatura = 25;
+        voltaje = 220;
+        presion = 30;
+        velocidad = 1000;
+
+        siguiente = NULL;
+    }
+
+    int getId() {
+        return id;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    float getTemperatura() {
+        return temperatura;
+    }
+
+    void simularTelemetria() {
+
+        temperatura = 50 + rand() % 80;
+        voltaje = 200 + rand() % 40;
+        presion = 20 + rand() % 50;
+        velocidad = 800 + rand() % 500;
+
+        historialTemperatura.push(temperatura);
+    }
+
+    void mostrarEstado() {
+
+        cout << "\n===== GEMELO DIGITAL =====\n";
+
+        cout << "Maquina: " << nombre << endl;
+        cout << "Temperatura: " << temperatura << endl;
+        cout << "Voltaje: " << voltaje << endl;
+        cout << "Presion: " << presion << endl;
+        cout << "Velocidad: " << velocidad << endl;
+    }
+
+    void guardarLog() {
+
+        ofstream archivo("logs.txt", ios::app);
+
+        archivo
+            << nombre << ","
+            << temperatura << ","
+            << voltaje << ","
+            << presion << ","
+            << velocidad << endl;
+
+        archivo.close();
+    }
+};
+
+/*==================================================
+    CLASE PLANTA
+==================================================*/
+class Planta {
+private:
+    int id;
+    string nombre;
+
+public:
+    Maquina* listaMaquinas;
+    Planta* siguiente;
+
+    Planta(int id, string nombre) {
+        this->id = id;
+        this->nombre = nombre;
+
+        listaMaquinas = NULL;
+        siguiente = NULL;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    void agregarMaquina(Maquina* nueva) {
+
+        if (listaMaquinas == NULL) {
+            listaMaquinas = nueva;
+        } else {
+
+            Maquina* aux = listaMaquinas;
+
+            while (aux->siguiente != NULL) {
+                aux = aux->siguiente;
+            }
+
+            aux->siguiente = nueva;
+        }
+    }
+
+    void mostrarMaquinas() {
+
+        Maquina* aux = listaMaquinas;
+
+        while (aux != NULL) {
+
+            cout << "Maquina ID: "
+                 << aux->getId()
+                 << " Nombre: "
+                 << aux->getNombre()
+                 << endl;
+
+            aux = aux->siguiente;
+        }
+    }
+};
+
+/*==================================================
+    CLASE EMPRESA
+==================================================*/
+class Empresa {
+private:
+    int id;
+    string nombre;
+
+public:
+    Planta* listaPlantas;
+    Empresa* siguiente;
+
+    Empresa(int id, string nombre) {
+        this->id = id;
+        this->nombre = nombre;
+
+        listaPlantas = NULL;
+        siguiente = NULL;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    void agregarPlanta(Planta* nueva) {
+
+        if (listaPlantas == NULL) {
+            listaPlantas = nueva;
+        } else {
+
+            Planta* aux = listaPlantas;
+
+            while (aux->siguiente != NULL) {
+                aux = aux->siguiente;
+            }
+
+            aux->siguiente = nueva;
+        }
+    }
+
+    void mostrarPlantas() {
+
+        Planta* aux = listaPlantas;
+
+        while (aux != NULL) {
+
+            cout << "Planta: "
+                 << aux->getNombre()
+                 << endl;
+
+            aux = aux->siguiente;
+        }
+    }
+};
+
+/*==================================================
+    MULTILISTA PRINCIPAL
+==================================================*/
+class Multilista {
+public:
+    Empresa* listaEmpresas;
+
+    Multilista() {
+        listaEmpresas = NULL;
+    }
+
+    void agregarEmpresa(Empresa* nueva) {
+
+        if (listaEmpresas == NULL) {
+            listaEmpresas = nueva;
+        } else {
+
+            Empresa* aux = listaEmpresas;
+
+            while (aux->siguiente != NULL) {
+                aux = aux->siguiente;
+            }
+
+            aux->siguiente = nueva;
+        }
+    }
+
+    void mostrarEmpresas() {
+
+        Empresa* aux = listaEmpresas;
+
+        while (aux != NULL) {
+
+            cout << "\nEmpresa: "
+                 << aux->getNombre()
+                 << endl;
+
+            aux->mostrarPlantas();
+
+            aux = aux->siguiente;
+        }
+    }
+};
+
+/*==================================================
+    ALERTAS
+==================================================*/
+class Alerta {
+public:
+    int prioridad;
+    string mensaje;
+
+    Alerta(int prioridad, string mensaje) {
+        this->prioridad = prioridad;
+        this->mensaje = mensaje;
+    }
+
+    bool operator<(const Alerta& otra) const {
+        return prioridad < otra.prioridad;
+    }
+};
+
+/*==================================================
+    MAIN
+==================================================*/
+int main() {
+
+    srand(time(NULL));
+
+    /*====================================
+        USUARIOS
+    ====================================*/
+
+    Usuario admin(
+        "Carlos",
+        "123",
+        "admin",
+        "1234",
+        "Administrador",
+        "N/A"
+    );
+
+    Usuario ingeniero(
+        "Luis",
+        "456",
+        "ing",
+        "1234",
+        "Ingeniero",
+        "Ingeniero de Automatizacion"
+    );
+
+    Usuario cliente(
+        "Pedro",
+        "789",
+        "cliente",
+        "1234",
+        "Cliente",
+        "N/A"
+    );
+
+    /*====================================
+        LOGIN
+    ====================================*/
+
+    string user;
+    string pass;
+
+    cout << "===== LOGIN =====\n";
+
+    cout << "Usuario: ";
+    cin >> user;
+
+    cout << "Password: ";
+    cin >> pass;
+
+    Usuario* usuarioActivo = NULL;
+
+    if (admin.login(user, pass)) {
+        usuarioActivo = &admin;
+    }
+    else if (ingeniero.login(user, pass)) {
+        usuarioActivo = &ingeniero;
+    }
+    else if (cliente.login(user, pass)) {
+        usuarioActivo = &cliente;
+    }
+
+    if (usuarioActivo == NULL) {
+
+        cout << "Acceso denegado\n";
+        return 0;
+    }
+
+    cout << "\nBienvenido "
+         << usuarioActivo->getNombre()
+         << endl;
+
+    cout << "Rol: "
+         << usuarioActivo->getRol()
+         << endl;
+
+    if (usuarioActivo->getRol() == "Ingeniero") {
+
+        cout << "Cargo: "
+             << usuarioActivo->getCargoIngeniero()
+             << endl;
+    }
+
+    /*====================================
+        MULTILISTA
+    ====================================*/
+
+    Multilista sistema;
+
+    Empresa* e1 = new Empresa(1, "Tesla");
+    Planta* p1 = new Planta(1, "Planta Norte");
+
+    Maquina* m1 = new Maquina(1, "Brazo Robotico A");
+    Maquina* m2 = new Maquina(2, "Brazo Robotico B");
+
+    p1->agregarMaquina(m1);
+    p1->agregarMaquina(m2);
+
+    e1->agregarPlanta(p1);
+
+    sistema.agregarEmpresa(e1);
+
+    sistema.mostrarEmpresas();
+
+    /*====================================
+        TELEMETRIA
+    ====================================*/
+
+    priority_queue<Alerta> colaAlertas;
+
+    Maquina* actual = p1->listaMaquinas;
+
+    while (actual != NULL) {
+
+        actual->simularTelemetria();
+
+        actual->mostrarEstado();
+
+        actual->guardarLog();
+
+        if (actual->getTemperatura() > 100) {
+
+            colaAlertas.push(
+                Alerta(
+                    10,
+                    "Temperatura critica en "
+                    + actual->getNombre()
+                )
+            );
+        }
+
+        actual = actual->siguiente;
+    }
+
+    /*====================================
+        ALERTAS
+    ====================================*/
+
+    cout << "\n===== ALERTAS =====\n";
+
+    while (!colaAlertas.empty()) {
+
+        cout
+            << colaAlertas.top().mensaje
+            << endl;
+
+        colaAlertas.pop();
+    }
+
+    cout << "\nSistema finalizado\n";
+
+    return 0;
+}
